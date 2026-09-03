@@ -1,0 +1,669 @@
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 380px;
+    height: 550px;
+
+    overflow: hidden;
+}
+
+body {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        system-ui,
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background: var(--ink);
+    color: var(--text);
+}
+
+
+/* =========================================
+   TOKENS
+========================================= */
+
+:root {
+    /* surfaces */
+    --ink: #121210;
+    --surface: #19181c;
+    --surface-2: #201f24;
+    --surface-3: #29272c;
+
+    /* lines */
+    --border: #322f36;
+    --border-soft: #221f24;
+
+    /* text */
+    --text: #ede8dc;
+    --text-dim: #9c978a;
+    --text-faint: #605c56;
+
+    /* accent — flat, no gradients */
+    --amber: #e8a33d;
+    --amber-deep: #c77f1f;
+    --amber-ink: #1a1408;
+    --amber-dim: rgba(232, 163, 61, 0.1);
+    --amber-line: rgba(232, 163, 61, 0.32);
+
+    --mono:
+        ui-monospace,
+        "SF Mono",
+        "Cascadia Mono",
+        Consolas,
+        monospace;
+}
+
+
+/* =========================================
+   APP
+========================================= */
+
+.app {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    background: var(--ink);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.header {
+    flex-shrink: 0;
+
+    height: 56px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 16px;
+
+    border-bottom: 1px solid var(--border-soft);
+
+    background: var(--surface);
+}
+
+
+/* Brand */
+
+.brand {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.brand-mark {
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2px;
+
+    border-radius: 7px;
+
+    background: var(--surface-3);
+    border: 1px solid var(--border);
+}
+
+.brand-mark .bar {
+    width: 2.5px;
+    border-radius: 2px;
+    background: var(--amber);
+}
+
+.brand-mark .bar:nth-child(1) {
+    height: 8px;
+}
+
+.brand-mark .bar:nth-child(2) {
+    height: 14px;
+}
+
+.brand-mark .bar:nth-child(3) {
+    height: 6px;
+}
+
+.brand-mark .bar:nth-child(4) {
+    height: 11px;
+}
+
+.brand-text h1 {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    letter-spacing: -0.1px;
+
+    color: var(--text);
+}
+
+.brand-text span {
+    display: block;
+
+    margin-top: 1px;
+
+    font-size: 9.5px;
+    font-weight: 500;
+
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+}
+
+
+/* Sync status */
+
+.sync-status {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    letter-spacing: 0.2px;
+
+    color: var(--text-dim);
+}
+
+.pulse-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--amber);
+
+    position: relative;
+}
+
+.pulse-dot::after {
+    content: "";
+
+    position: absolute;
+    inset: -3px;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--amber);
+
+    opacity: 0.6;
+
+    animation: pulseRing 2.2s infinite ease-out;
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.6);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+
+/* =========================================
+   CONTEXT BAR — "now watching" strip
+========================================= */
+
+.context-bar {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: baseline;
+
+    gap: 8px;
+
+    padding: 8px 16px;
+
+    border-bottom: 1px solid var(--border-soft);
+
+    background: var(--ink);
+
+    overflow: hidden;
+}
+
+.context-eyebrow {
+    flex-shrink: 0;
+
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+
+    color: var(--amber);
+}
+
+.context-title {
+    min-width: 0;
+
+    font-size: 11.5px;
+
+    color: var(--text-dim);
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================
+   CHAT CONTAINER
+========================================= */
+
+.chat-container {
+    flex: 1;
+
+    min-height: 0;
+
+    padding: 16px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scroll-behavior: smooth;
+}
+
+
+/* Scrollbar */
+
+.chat-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+    background: var(--surface-3);
+}
+
+
+/* =========================================
+   MESSAGE
+========================================= */
+
+.message {
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+
+    margin-bottom: 14px;
+
+    animation: messageAppear 0.16s ease-out;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message.assistant {
+    justify-content: flex-start;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+
+/* =========================================
+   MESSAGE BODY
+========================================= */
+
+.message-body {
+    width: fit-content;
+
+    max-width: 88%;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.message.user .message-body {
+    align-items: flex-end;
+}
+
+
+/* Meta row: sender tag + timestamp */
+
+.message-meta {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin: 0 0 4px 2px;
+}
+
+.message.user .message-meta {
+    margin: 0 2px 4px 0;
+    flex-direction: row-reverse;
+}
+
+.sender-tag {
+    font-size: 9.5px;
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+
+    color: var(--text-faint);
+}
+
+.message.assistant .sender-tag {
+    color: var(--amber);
+}
+
+.time-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+
+    color: var(--text-faint);
+}
+
+
+/* =========================================
+   MESSAGE CONTENT
+========================================= */
+
+.message-content {
+    width: fit-content;
+    max-width: 100%;
+
+    padding: 9px 12px;
+
+    font-size: 13px;
+    line-height: 1.55;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+
+/* Assistant — transcript-card treatment */
+
+.message.assistant .message-content {
+    background: var(--surface);
+
+    border: 1px solid var(--border-soft);
+    border-left: 2px solid var(--amber);
+
+    border-radius: 0 8px 8px 8px;
+
+    color: var(--text);
+}
+
+
+/* User — flat, crisp corner opposite the assistant's */
+
+.message.user .message-content {
+    background: var(--surface-3);
+
+    border: 1px solid var(--border);
+    border-right: 2px solid var(--text-faint);
+
+    border-radius: 8px 0 8px 8px;
+
+    color: var(--text);
+}
+
+
+/* =========================================
+   THINKING INDICATOR
+========================================= */
+
+.thinking-message .message-content {
+    padding: 10px 13px;
+}
+
+.thinking-dots {
+    display: flex;
+    align-items: center;
+
+    gap: 4px;
+
+    height: 14px;
+}
+
+.thinking-dots span {
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: var(--amber);
+
+    animation: thinking 1.1s infinite ease-in-out;
+}
+
+.thinking-dots span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.thinking-dots span:nth-child(2) {
+    animation-delay: 0.14s;
+}
+
+.thinking-dots span:nth-child(3) {
+    animation-delay: 0.28s;
+}
+
+@keyframes thinking {
+
+    0%,
+    60%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.3;
+    }
+
+    30% {
+        transform: translateY(-3px);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
+
+.message.assistant.error .message-content {
+    border-left-color: var(--text-faint);
+    color: var(--text-dim);
+}
+
+
+/* =========================================
+   INPUT AREA
+========================================= */
+
+.input-area {
+    flex-shrink: 0;
+
+    padding: 10px 12px 12px;
+
+    border-top: 1px solid var(--border-soft);
+
+    background: var(--surface);
+}
+
+
+/* Input wrapper */
+
+.input-wrapper {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 3px 3px 3px 12px;
+
+    border-radius: 8px;
+
+    background: var(--ink);
+    border: 1px solid var(--border);
+
+    transition: border-color 0.15s;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--amber-line);
+}
+
+
+/* Input */
+
+#question-input {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 8px 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 13px;
+}
+
+#question-input::placeholder {
+    color: var(--text-faint);
+}
+
+
+/* =========================================
+   SEND BUTTON
+========================================= */
+
+#send-button {
+    width: 30px;
+    height: 30px;
+
+    flex: 0 0 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    background: var(--surface-3);
+
+    color: var(--text-dim);
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s,
+        color 0.15s,
+        border-color 0.15s;
+}
+
+#send-button svg {
+    width: 15px;
+    height: 15px;
+}
+
+#send-button:hover:not(:disabled) {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--amber-ink);
+}
+
+#send-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+
+/* =========================================
+   INPUT HINT
+========================================= */
+
+.input-hint {
+    margin-top: 7px;
+
+    text-align: center;
+
+    font-family: var(--mono);
+    font-size: 9px;
+
+    color: var(--text-faint);
+}
+
+.timestamp-button {
+    margin-top: 8px;
+    padding: 5px 8px;
+    background: transparent;
+    border: 1px solid var(--amber-line);
+    border-radius: 5px;
+    color: var(--amber);
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.timestamp-button:hover {
+    background: var(--amber-dim);
+}

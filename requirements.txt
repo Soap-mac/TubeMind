@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+
+youtube-transcript-api
+
+langchain
+langchain-core
+langchain-community
+langchain-huggingface
+langchain-text-splitters
+langchain-google-genai
+
+sentence-transformers
+rank-bm25
+faiss-cpu

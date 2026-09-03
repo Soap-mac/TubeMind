@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TubeMind</title>
+
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- Header -->
+        <header class="header">
+
+            <div class="brand">
+
+                <div class="brand-mark">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+
+                <div class="brand-text">
+                    <h1>TubeMind</h1>
+                    <span>Video Q&amp;A</span>
+                </div>
+
+            </div>
+
+            <div class="sync-status">
+                <span class="pulse-dot"></span>
+                <span>Synced</span>
+            </div>
+
+        </header>
+
+
+        <!-- Now watching -->
+        <div class="context-bar">
+            <span class="context-eyebrow">Watching</span>
+            <span class="context-title" id="context-title">Open a YouTube video</span>
+        </div>
+
+
+        <!-- Chat -->
+        <main id="chat-container" class="chat-container">
+
+            <!-- Initial assistant message -->
+            <div class="message assistant">
+                <div class="message-body">
+
+                    <div class="message-meta">
+                        <span class="sender-tag">TubeMind</span>
+                    </div>
+
+                    <div class="message-content">Ask me anything about this video.</div>
+
+                </div>
+            </div>
+
+        </main>
+
+
+        <!-- Input -->
+        <form id="chat-form" class="input-area">
+
+            <div class="input-wrapper">
+
+                <input type="text" id="question-input" placeholder="Ask about this video…" autocomplete="off">
+
+                <button type="submit" id="send-button" aria-label="Send message">
+
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M4 12h15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+
+                        <path d="m13 6 6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <div class="input-hint">
+                grounded in the video transcript
+            </div>
+
+        </form>
+
+    </div>
+
+    <script src="popup.js"></script>
+
+</body>
+
+</html>
