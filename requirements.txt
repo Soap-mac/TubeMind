@@ -13,7 +13,7 @@ langchain-google-genai==2.1.4
 
 sentence-transformers==3.4.1
 rank-bm25==0.2.2
-faiss-cpu==1.10.0
+faiss-cpu==1.15.0
 
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.6.0+cpu
