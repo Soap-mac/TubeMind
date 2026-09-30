@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TubeMind — ask questions about a YouTube video's transcript.">
+  <title>TubeMind — YouTube Q&A</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">TubeMind</p>
+        <h1>Ask questions about a YouTube video.</h1>
+        <p class="sub">
+          TubeMind retrieves the video's timestamped transcript and answers from the indexed transcript.
+        </p>
+      </div>
+      <a class="github-link" href="https://github.com/Soap-mac/TubeMind" target="_blank" rel="noreferrer">
+        View source
+      </a>
+    </header>
+
+    <section class="card setup-card">
+      <label for="video-url">YouTube video URL</label>
+      <div class="url-row">
+        <input id="video-url" type="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
+        <button id="prepare-button" type="button">Analyze video</button>
+      </div>
+      <p id="status" class="status" role="status">Paste a video URL to begin.</p>
+    </section>
+
+    <section id="chat-card" class="card chat-card hidden">
+      <div class="chat-header">
+        <div>
+          <span class="eyebrow">Current video</span>
+          <strong id="video-label">—</strong>
+        </div>
+        <a id="open-video" href="#" target="_blank" rel="noreferrer">Open on YouTube ↗</a>
+      </div>
+
+      <div id="messages" class="messages">
+        <div class="bubble assistant">
+          <div class="bubble-name">TubeMind</div>
+          <div>Ask me anything about the transcript.</div>
+        </div>
+      </div>
+
+      <form id="chat-form" class="chat-form">
+        <input id="question" type="text" placeholder="What is this video mainly about?" autocomplete="off">
+        <button id="send-button" type="submit">Ask</button>
+      </form>
+    </section>
+
+    <footer>
+      <span>RAG grounded in the video transcript.</span>
+      <span>Cloudflare Worker + Gemini + Supadata</span>
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
