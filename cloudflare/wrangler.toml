@@ -1,0 +1,11 @@
+name = "tubemind"
+main = "./src/index.js"
+compatibility_date = "2026-09-30"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "TUBEMIND_CACHE"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
