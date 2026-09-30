@@ -1,3 +1,5 @@
+const API_BASE_URL = "https://YOUR-WORKER.workers.dev";
+
 const chatForm = document.getElementById("chat-form");
 const questionInput = document.getElementById("question-input");
 const chatContainer = document.getElementById("chat-container");
@@ -7,29 +9,23 @@ const contextTitle = document.getElementById("context-title");
 let chatHistory = [];
 let currentVideoId = null;
 
-
 function formatTime(date) {
-
     return date.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit"
     });
 }
 
-
 function formatVideoTime(seconds) {
-
     const mins = Math.floor(seconds / 60);
-
     const secs = Math.floor(seconds % 60)
         .toString()
         .padStart(2, "0");
 
-    return `${mins}:${secs}`;
+    return mins + ":" + secs;
 }
 
 async function seekVideo(timestamp) {
-
     const tabs = await chrome.tabs.query({
         active: true,
         currentWindow: true
@@ -41,21 +37,18 @@ async function seekVideo(timestamp) {
         return;
     }
 
-
     await chrome.scripting.executeScript({
         target: {
             tabId: tab.id
         },
 
         func: (time) => {
-
             const video = document.querySelector("video");
 
             if (video) {
                 video.currentTime = time;
                 video.play();
             }
-
         },
 
         args: [timestamp]
@@ -63,34 +56,26 @@ async function seekVideo(timestamp) {
 }
 
 function cleanVideoTitle(rawTitle) {
-
     if (!rawTitle) {
         return null;
     }
 
-    // YouTube tab titles are usually "Video Title - YouTube"
     return rawTitle.replace(/\s*-\s*YouTube\s*$/, "").trim();
 }
 
-
 function clearChatMessages() {
-
     chatContainer.innerHTML = "";
-
     addWelcomeMessage();
 }
 
 function addWelcomeMessage() {
-
     addMessage(
         "Ask me anything about this video.",
         "assistant"
     );
 }
 
-
 async function getActiveTab() {
-
     const tabs = await chrome.tabs.query({
         active: true,
         currentWindow: true
@@ -99,9 +84,7 @@ async function getActiveTab() {
     return tabs[0] || null;
 }
 
-
 async function getCurrentVideoId() {
-
     const tab = await getActiveTab();
 
     if (!tab || !tab.url) {
@@ -110,9 +93,10 @@ async function getCurrentVideoId() {
 
     const url = new URL(tab.url);
 
-    if (url.hostname !== "www.youtube.com" &&
-        url.hostname !== "youtube.com") {
-
+    if (
+        url.hostname !== "www.youtube.com" &&
+        url.hostname !== "youtube.com"
+    ) {
         throw new Error("Please open a YouTube video.");
     }
 
@@ -125,27 +109,21 @@ async function getCurrentVideoId() {
     return videoId;
 }
 
-
 async function updateContextBar() {
-
     try {
-
         const tab = await getActiveTab();
-
         const title = cleanVideoTitle(tab?.title);
-
-        contextTitle.textContent = title || "Open a YouTube video";
-
+        contextTitle.textContent =
+            title || "Open a YouTube video";
     } catch (error) {
-
-        contextTitle.textContent = "Open a YouTube video";
+        contextTitle.textContent =
+            "Open a YouTube video";
     }
 }
 
-
 async function checkVideoChange() {
-
-    const videoId = await getCurrentVideoId().catch(() => null);
+    const videoId =
+        await getCurrentVideoId().catch(() => null);
 
     if (!videoId) {
         return;
@@ -158,26 +136,14 @@ async function checkVideoChange() {
     }
 
     if (currentVideoId !== videoId) {
-
-        console.log(
-            `Video changed: ${currentVideoId} → ${videoId}`
-        );
-
         currentVideoId = videoId;
-
-        // Remove previous conversation
         chatHistory = [];
-
-        // Remove previous messages
         clearChatMessages();
-
         updateContextBar();
     }
 }
 
-
 function addThinkingMessage() {
-
     const messageElement = document.createElement("div");
 
     messageElement.classList.add(
@@ -191,14 +157,16 @@ function addThinkingMessage() {
 
     const meta = document.createElement("div");
     meta.className = "message-meta";
-    meta.innerHTML = `<span class="sender-tag">TubeMind</span>`;
+    meta.innerHTML =
+        '<span class="sender-tag">TubeMind</span>';
 
     const content = document.createElement("div");
     content.className = "message-content";
 
     const dots = document.createElement("div");
     dots.className = "thinking-dots";
-    dots.innerHTML = "<span></span><span></span><span></span>";
+    dots.innerHTML =
+        "<span></span><span></span><span></span>";
 
     content.appendChild(dots);
     body.appendChild(meta);
@@ -214,17 +182,19 @@ function addThinkingMessage() {
 }
 
 function removeThinkingMessage(element) {
-
     if (element) {
         element.remove();
     }
-
 }
 
-
-function addMessage(message, sender, isError = false, timestamp = null) {
-
-    const messageElement = document.createElement("div");
+function addMessage(
+    message,
+    sender,
+    isError = false,
+    timestamp = null
+) {
+    const messageElement =
+        document.createElement("div");
 
     messageElement.classList.add(
         "message",
@@ -235,9 +205,10 @@ function addMessage(message, sender, isError = false, timestamp = null) {
         messageElement.classList.add("error");
     }
 
-    const senderName = sender === "assistant"
-        ? "TubeMind"
-        : "You";
+    const senderName =
+        sender === "assistant"
+            ? "TubeMind"
+            : "You";
 
     const timeLabel = formatTime(new Date());
 
@@ -260,25 +231,25 @@ function addMessage(message, sender, isError = false, timestamp = null) {
 
     const content = document.createElement("div");
     content.className = "message-content";
-    // textContent (not innerHTML) so the text renders exactly as given —
-    // no stray whitespace from formatting, no raw HTML injection.
     content.textContent = message;
 
-    if (sender === "assistant" && timestamp !== null) {
-
-        const jumpButton = document.createElement("button");
+    if (
+        sender === "assistant" &&
+        timestamp !== null
+    ) {
+        const jumpButton =
+            document.createElement("button");
 
         jumpButton.textContent =
-            `▶ Jump to ${formatVideoTime(timestamp)}`;
+            "▶ Jump to " +
+            formatVideoTime(timestamp);
 
-
-        jumpButton.className = "timestamp-button";
-
+        jumpButton.className =
+            "timestamp-button";
 
         jumpButton.onclick = () => {
             seekVideo(timestamp);
         };
-
 
         content.appendChild(
             document.createElement("br")
@@ -287,7 +258,6 @@ function addMessage(message, sender, isError = false, timestamp = null) {
         content.appendChild(
             jumpButton
         );
-
     }
 
     body.appendChild(meta);
@@ -300,18 +270,14 @@ function addMessage(message, sender, isError = false, timestamp = null) {
         chatContainer.scrollHeight;
 }
 
-
 async function askBackend(question) {
-
-
-    const videoId = await getCurrentVideoId();
+    const tab = await getActiveTab();
+    const videoId =
+        await getCurrentVideoId();
 
     if (currentVideoId === null) {
-
         currentVideoId = videoId;
-
     } else if (currentVideoId !== videoId) {
-
         currentVideoId = videoId;
         chatHistory = [];
         clearChatMessages();
@@ -319,7 +285,7 @@ async function askBackend(question) {
     }
 
     const response = await fetch(
-        "http://127.0.0.1:8000/ask",
+        API_BASE_URL + "/api/ask",
         {
             method: "POST",
 
@@ -329,66 +295,57 @@ async function askBackend(question) {
 
             body: JSON.stringify({
                 video_id: videoId,
-                question: question,
+                video_url: tab?.url || "",
+                question,
                 history: chatHistory
             })
         }
     );
 
-
     const data = await response.json();
 
-
     if (!response.ok) {
-
         throw new Error(
-            data.detail || "Something went wrong."
+            data.error ||
+            "Something went wrong."
         );
     }
-
 
     return data;
 }
 
-
 chatForm.addEventListener(
     "submit",
     async function (event) {
-
         event.preventDefault();
 
         const question =
             questionInput.value.trim();
 
-
         if (!question) {
             return;
         }
 
-
-        // Show user question
         addMessage(
             question,
             "user"
         );
 
-
-        // Clear input
         questionInput.value = "";
 
-
-        // Prevent multiple requests
         sendButton.disabled = true;
 
-
-        // Show thinking indicator
         const thinkingMessage =
             addThinkingMessage();
 
-
         try {
-            const result = await askBackend(question);
-            removeThinkingMessage(thinkingMessage);
+            const result =
+                await askBackend(question);
+
+            removeThinkingMessage(
+                thinkingMessage
+            );
+
             addMessage(
                 result.answer,
                 "assistant",
@@ -405,27 +362,24 @@ chatForm.addEventListener(
                 role: "assistant",
                 content: result.answer
             });
-
         } catch (error) {
-
-            removeThinkingMessage(thinkingMessage);
+            removeThinkingMessage(
+                thinkingMessage
+            );
 
             addMessage(
                 error.message,
                 "assistant",
                 true
             );
-
         } finally {
-
             sendButton.disabled = false;
-
         }
-
     }
 );
 
-
-// Initial context bar paint + periodic video-change check
 updateContextBar();
-setInterval(checkVideoChange, 1500);
+setInterval(
+    checkVideoChange,
+    1500
+);
