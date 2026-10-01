@@ -1,7 +1,3 @@
-/* =========================================
-   RESET
-========================================= */
-
 * {
     box-sizing: border-box;
 }
@@ -31,28 +27,19 @@ body {
     color: var(--text);
 }
 
-
-/* =========================================
-   TOKENS
-========================================= */
-
 :root {
-    /* surfaces */
     --ink: #121210;
     --surface: #19181c;
     --surface-2: #201f24;
     --surface-3: #29272c;
 
-    /* lines */
     --border: #322f36;
     --border-soft: #221f24;
 
-    /* text */
     --text: #ede8dc;
     --text-dim: #9c978a;
     --text-faint: #605c56;
 
-    /* accent — flat, no gradients */
     --amber: #e8a33d;
     --amber-deep: #c77f1f;
     --amber-ink: #1a1408;
@@ -67,11 +54,6 @@ body {
         monospace;
 }
 
-
-/* =========================================
-   APP
-========================================= */
-
 .app {
     width: 100%;
     height: 100%;
@@ -81,11 +63,6 @@ body {
 
     background: var(--ink);
 }
-
-
-/* =========================================
-   HEADER
-========================================= */
 
 .header {
     flex-shrink: 0;
@@ -102,9 +79,6 @@ body {
 
     background: var(--surface);
 }
-
-
-/* Brand */
 
 .brand {
     display: flex;
@@ -178,9 +152,6 @@ body {
     color: var(--text-faint);
 }
 
-
-/* Sync status */
-
 .sync-status {
     display: flex;
     align-items: center;
@@ -233,11 +204,6 @@ body {
     }
 }
 
-
-/* =========================================
-   CONTEXT BAR — "now watching" strip
-========================================= */
-
 .context-bar {
     flex-shrink: 0;
 
@@ -281,10 +247,6 @@ body {
 }
 
 
-/* =========================================
-   CHAT CONTAINER
-========================================= */
-
 .chat-container {
     flex: 1;
 
@@ -298,8 +260,6 @@ body {
     scroll-behavior: smooth;
 }
 
-
-/* Scrollbar */
 
 .chat-container::-webkit-scrollbar {
     width: 5px;
@@ -318,10 +278,6 @@ body {
     background: var(--surface-3);
 }
 
-
-/* =========================================
-   MESSAGE
-========================================= */
 
 .message {
     width: 100%;
@@ -355,10 +311,6 @@ body {
 }
 
 
-/* =========================================
-   MESSAGE BODY
-========================================= */
-
 .message-body {
     width: fit-content;
 
@@ -373,9 +325,6 @@ body {
 .message.user .message-body {
     align-items: flex-end;
 }
-
-
-/* Meta row: sender tag + timestamp */
 
 .message-meta {
     display: flex;
@@ -413,10 +362,6 @@ body {
 }
 
 
-/* =========================================
-   MESSAGE CONTENT
-========================================= */
-
 .message-content {
     width: fit-content;
     max-width: 100%;
@@ -432,8 +377,6 @@ body {
 }
 
 
-/* Assistant — transcript-card treatment */
-
 .message.assistant .message-content {
     background: var(--surface);
 
@@ -446,8 +389,6 @@ body {
 }
 
 
-/* User — flat, crisp corner opposite the assistant's */
-
 .message.user .message-content {
     background: var(--surface-3);
 
@@ -459,10 +400,6 @@ body {
     color: var(--text);
 }
 
-
-/* =========================================
-   THINKING INDICATOR
-========================================= */
 
 .thinking-message .message-content {
     padding: 10px 13px;
@@ -516,19 +453,11 @@ body {
 }
 
 
-/* =========================================
-   ERROR MESSAGE
-========================================= */
-
 .message.assistant.error .message-content {
     border-left-color: var(--text-faint);
     color: var(--text-dim);
 }
 
-
-/* =========================================
-   INPUT AREA
-========================================= */
 
 .input-area {
     flex-shrink: 0;
@@ -540,8 +469,6 @@ body {
     background: var(--surface);
 }
 
-
-/* Input wrapper */
 
 .input-wrapper {
     width: 100%;
@@ -566,8 +493,6 @@ body {
 }
 
 
-/* Input */
-
 #question-input {
     flex: 1;
 
@@ -590,10 +515,6 @@ body {
     color: var(--text-faint);
 }
 
-
-/* =========================================
-   SEND BUTTON
-========================================= */
 
 #send-button {
     width: 30px;
@@ -636,11 +557,6 @@ body {
     cursor: not-allowed;
     opacity: 0.4;
 }
-
-
-/* =========================================
-   INPUT HINT
-========================================= */
 
 .input-hint {
     margin-top: 7px;

@@ -68,7 +68,6 @@ function cleanVideoTitle(rawTitle) {
         return null;
     }
 
-    // YouTube tab titles are usually "Video Title - YouTube"
     return rawTitle.replace(/\s*-\s*YouTube\s*$/, "").trim();
 }
 
@@ -165,10 +164,8 @@ async function checkVideoChange() {
 
         currentVideoId = videoId;
 
-        // Remove previous conversation
         chatHistory = [];
 
-        // Remove previous messages
         clearChatMessages();
 
         updateContextBar();
@@ -260,8 +257,7 @@ function addMessage(message, sender, isError = false, timestamp = null) {
 
     const content = document.createElement("div");
     content.className = "message-content";
-    // textContent (not innerHTML) so the text renders exactly as given —
-    // no stray whitespace from formatting, no raw HTML injection.
+
     content.textContent = message;
 
     if (sender === "assistant" && timestamp !== null) {
@@ -366,22 +362,17 @@ chatForm.addEventListener(
         }
 
 
-        // Show user question
         addMessage(
             question,
             "user"
         );
 
 
-        // Clear input
         questionInput.value = "";
 
 
-        // Prevent multiple requests
         sendButton.disabled = true;
 
-
-        // Show thinking indicator
         const thinkingMessage =
             addThinkingMessage();
 
@@ -426,6 +417,5 @@ chatForm.addEventListener(
 );
 
 
-// Initial context bar paint + periodic video-change check
 updateContextBar();
 setInterval(checkVideoChange, 1500);

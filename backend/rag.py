@@ -450,7 +450,6 @@ def find_relevant_segment(question, answer, docs):
     if not candidates:
         return None
 
-    # Remove duplicate segments
     unique_segments = {}
 
     for segment in candidates:
@@ -466,15 +465,9 @@ def find_relevant_segment(question, answer, docs):
         unique_segments.values()
     )
 
-    # Sort chronologically
     candidates.sort(
         key=lambda x: x["start_time"]
     )
-
-    # ------------------------------------------------
-    # IMPORTANT:
-    # Use both the question AND generated answer
-    # ------------------------------------------------
 
     grounding_query = (
         f"Question: {question}\n"

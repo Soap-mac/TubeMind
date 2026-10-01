@@ -4,9 +4,6 @@ from collections import OrderedDict
 from rag import get_vector_store, ask_question
 from fastapi.middleware.cors import CORSMiddleware
 
-
-
-
 app = FastAPI(
     title="TubeMind API",
     description="AI-powered YouTube video assistant",

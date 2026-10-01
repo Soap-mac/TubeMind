@@ -50,7 +50,6 @@ def get_transcript(video_id):
                 f"| generated={transcript.is_generated}"
             )
 
-        # Prefer a manually created transcript
         manual_transcripts = [
             transcript
             for transcript in transcripts
@@ -61,7 +60,6 @@ def get_transcript(video_id):
             selected_transcript = manual_transcripts[0]
 
         else:
-            # Otherwise use an automatically generated transcript
             selected_transcript = transcripts[0]
 
         print(
